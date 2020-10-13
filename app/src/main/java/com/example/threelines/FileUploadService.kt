@@ -5,10 +5,11 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
-interface UploadFileService {
+interface FileUploadService {
     @Multipart
     @POST("/file_upload/")
     fun uploadFile(
-        @Part("file") file: MultipartBody.Part
-    ) : Call<resp>
+        @Part("userId") userId : String,
+        @Part ("file") file : MultipartBody.Part
+    ): Call<String>
 }

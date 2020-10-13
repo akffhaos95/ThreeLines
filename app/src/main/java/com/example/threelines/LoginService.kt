@@ -11,5 +11,5 @@ interface LoginService{
     fun requestLogin(
         @Field("userid") userid:String,
         @Field("userpw") userpw:String
-    ) : Call<resp>
+    ) : Call<Login>
 }

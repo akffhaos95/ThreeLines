@@ -1,6 +1,6 @@
 package com.example.threelines
 
-data class resp(
+data class Login(
     val code: String,
     val msg: String
 )
