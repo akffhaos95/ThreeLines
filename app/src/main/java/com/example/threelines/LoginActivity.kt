@@ -5,20 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private var Login: Login? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         /* retrofit */
         var retrofit = Retrofit.Builder()
@@ -44,16 +44,16 @@ class MainActivity : AppCompatActivity() {
             loginService.requestLogin(id, pw).enqueue(object: Callback<Login> {
                 override fun onFailure(call: Call<Login>, t: Throwable) {
                     Log.e("LOGIN", t.message!!)
-                    var dialog = AlertDialog.Builder(this@MainActivity)
+                    var dialog = AlertDialog.Builder(this@LoginActivity)
                     dialog.setTitle("에러")
                     dialog.setMessage("호출 실패")
                     dialog.show()
                 }
 
                 override fun onResponse(call: Call<Login>, Login: Response<Login>) {
-                    this@MainActivity.Login = Login.body()
-                    Log.d("LOGIN", "msg : " + this@MainActivity.Login?.msg)
-                    Log.d("LOGIN", "code : " + this@MainActivity.Login?.code)
+                    this@LoginActivity.Login = Login.body()
+                    Log.d("LOGIN", "msg : " + this@LoginActivity.Login?.msg)
+                    Log.d("LOGIN", "code : " + this@LoginActivity.Login?.code)
                 }
             })
         }
