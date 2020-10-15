@@ -10,13 +10,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 /*
 * SplashActivity
 * 앱 실행시에 처음 시작
 * 1. SharedPreferences에 로그인 정보가 있을 시에 로그인 시도
 * 2. 로그인 정보가 없다 || 로그인 실패시 -> LoginActivity로 이동
-* 3. 로그인 성공시 -> 인증값으로 MainFragment로 이동
+* 3. 로그인 성공시 -> 인증값으로 MainActivity로 이동
 */
 class SplashActivity : AppCompatActivity() {
     private var Login: Login? = null
@@ -58,11 +57,10 @@ class SplashActivity : AppCompatActivity() {
                 }
             })
         }
-        if (loginSuccess){ // 로그인 성공
-            //메인으로 이동
-            //val intent = Intent(this, LoginActivity::class.java)
-            //startActivity(intent);
-        } else { // 로그인 실패
+        if (loginSuccess){ // 로그인 성공, 메인 화면으로 이동
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent);
+        } else { // 로그인 실패, 로그인 화면으로 이동
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent);
             finish()

@@ -9,7 +9,7 @@ interface LoginService{
     @FormUrlEncoded
     @POST("/app_login/")
     fun requestLogin(
-        @Field("userid") userid: String?,
-        @Field("userpw") userpw:String?
+        @Field("userid") id: String?,
+        @Field("userpw") pw:String?
     ) : Call<Login>
 }

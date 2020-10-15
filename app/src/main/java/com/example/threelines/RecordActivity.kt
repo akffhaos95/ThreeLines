@@ -25,7 +25,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.io.IOException
 import java.lang.IllegalStateException
-
+/*
+* RecordActivity
+* 회의 녹음 -> 서버로 전송
+* 회의 녹음 : MediaRecorder
+*   녹음 [시작, 중지, 재개, 정지]
+*   파일 경로는 ~~~로
+* 서버 전송 : Retrofit
+* */
 class RecordActivity : AppCompatActivity() {
 
     private var output: String? = null
