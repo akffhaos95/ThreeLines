@@ -1,4 +1,4 @@
-package com.example.threelines
+package com.example.threelines.Data
 
 data class Login(
     val code: String,

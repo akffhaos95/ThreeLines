@@ -1,9 +1,14 @@
 package com.example.threelines
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.threelines.Activity.TextActivity
+import com.example.threelines.Data.Record
 import kotlinx.android.synthetic.main.record_item.view.*
 
 class RecordAdapter : RecyclerView.Adapter<Holder>(){
@@ -17,6 +22,13 @@ class RecordAdapter : RecyclerView.Adapter<Holder>(){
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val data = listData.get(position)
         holder.setListData(data)
+
+        holder.itemView.setOnClickListener{
+            Log.d("ADAPTER", "Clicked ${holder.itemView?.record_id.text}")
+            val intent = Intent(holder.itemView?.context, TextActivity::class.java)
+            intent.putExtra("record_id", holder.itemView?.record_id.text)
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,5 +1,6 @@
-package com.example.threelines
+package com.example.threelines.Network
 
+import com.example.threelines.Data.Login
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

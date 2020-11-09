@@ -1,4 +1,4 @@
-package com.example.threelines
+package com.example.threelines.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.threelines.Network.ApiService
+import com.example.threelines.R
 import kotlinx.android.synthetic.main.activity_mic.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -81,7 +83,7 @@ class MicActivity : AppCompatActivity() {
             .baseUrl("http://localhost:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        var fileUploadService: FileUploadService = retrofit.create(FileUploadService::class.java)
+        var fileUploadService: ApiService = retrofit.create(ApiService::class.java)
 
         button_send_audio.setOnClickListener{
             Toast.makeText(this, "파일 전송", Toast.LENGTH_SHORT).show()

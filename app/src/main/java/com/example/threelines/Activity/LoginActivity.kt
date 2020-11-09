@@ -1,10 +1,13 @@
-package com.example.threelines
+package com.example.threelines.Activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.threelines.Data.Login
+import com.example.threelines.Network.LoginService
+import com.example.threelines.R
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
