@@ -11,15 +11,15 @@ import com.example.threelines.Activity.TextActivity
 import com.example.threelines.Data.Record
 import kotlinx.android.synthetic.main.record_item.view.*
 
-class RecordAdapter : RecyclerView.Adapter<Holder>(){
+class RecordAdapter : RecyclerView.Adapter<RecordHolder>(){
     var listData = mutableListOf<Record>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.record_item, parent, false)
-        return Holder(view)
+        return RecordHolder(view)
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: RecordHolder, position: Int) {
         val data = listData.get(position)
         holder.setListData(data)
 
@@ -35,21 +35,13 @@ class RecordAdapter : RecyclerView.Adapter<Holder>(){
         return listData.size
     }
 }
-/*
-* data class Record (
-    val record_id: Int,
-    val audio_file: String,
-    val title: String,
-    val uploaded_date: Date,
-    val people: Int,
-    val location: String,
-    val user_id: String,
-    val deleted: Boolean
-    )
-* */
-class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+class RecordHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     fun setListData(listdata: Record){
         itemView.record_id.text = "${listdata.record_id}"
-        itemView.audio_file.text = listdata.audio_file
+        itemView.title.text = listdata.title
+        itemView.uploaded_date.text = listdata.uploaded_date
+        itemView.people.text = "${listdata.people}"
+        itemView.location.text = listdata.location
     }
 }

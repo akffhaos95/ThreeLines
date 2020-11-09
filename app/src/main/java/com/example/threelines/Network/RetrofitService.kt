@@ -13,6 +13,7 @@ interface RetrofitService {
         @Field("passwd") passwd : String
     ): Call<String>
 
+    @POST("/register_app")
     fun register(
         @Field("user_id") user_id : String,
         @Field("passwd") passwd : String
