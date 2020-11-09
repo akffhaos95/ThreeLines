@@ -1,7 +1,5 @@
 package com.example.threelines.Data
 
-import java.sql.Date
-
 data class Record (
     val record_id: Int,
     val title: String,

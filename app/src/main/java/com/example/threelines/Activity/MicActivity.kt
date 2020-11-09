@@ -13,17 +13,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.threelines.Network.ApiService
 import com.example.threelines.R
 import kotlinx.android.synthetic.main.activity_mic.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.io.IOException
 import java.lang.IllegalStateException
@@ -78,13 +72,6 @@ class MicActivity : AppCompatActivity() {
             pauseRecording()
         }
 
-        /* retrofit */
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://localhost:8000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        var fileUploadService: ApiService = retrofit.create(ApiService::class.java)
-
         button_send_audio.setOnClickListener{
             Toast.makeText(this, "파일 전송", Toast.LENGTH_SHORT).show()
 
@@ -92,20 +79,6 @@ class MicActivity : AppCompatActivity() {
             var requestBody : RequestBody = RequestBody.create(MediaType.parse("multipart/form-data/"),file)
             var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file","test",requestBody)
 
-            fileUploadService.uploadFile("tes", body).enqueue(object : Callback<String> {
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.e("FILE", t.message!!)
-                }
-
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if (response?.isSuccessful){
-                        Toast.makeText(applicationContext, "File Upload Successfully...", Toast.LENGTH_LONG).show();
-                        Log.d("FILE", "" + response?.body().toString());
-                    } else {
-                        Toast.makeText(applicationContext, "Some error occurred...", Toast.LENGTH_LONG).show();
-                    }
-                }
-            })
         }
     }
 

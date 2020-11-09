@@ -1,7 +1,5 @@
 package com.example.threelines.Data
 
-import java.sql.Date
-
 data class Text (
     val idx: Int,
     val content: String,

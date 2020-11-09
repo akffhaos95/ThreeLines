@@ -19,7 +19,6 @@ class RecordActivity : AppCompatActivity() {
     private var TAG = "RECORD"
     private lateinit var retrofit : Retrofit
     private lateinit var retrofitService: RetrofitService
-    private var data : MutableList<Record>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

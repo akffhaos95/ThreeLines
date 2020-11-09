@@ -3,12 +3,19 @@ package com.example.threelines.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.threelines.Data.Login
+import com.example.threelines.Data.Record
 import com.example.threelines.Network.LoginService
+import com.example.threelines.Network.RetrofitClient
+import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
+import com.example.threelines.TextAdapter
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_text.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,85 +38,61 @@ import javax.security.cert.CertificateException
 * 로그인 : Retrofit
 * */
 class LoginActivity : AppCompatActivity() {
-
-    private var Login: Login? = null
+    private var TAG = "LOGIN"
+    private lateinit var retrofit : Retrofit
+    private lateinit var retrofitService: RetrofitService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        /* retrofit */
-        var retrofit = Retrofit.Builder()
-                .baseUrl("https://192.168.1.8:8000")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(getUnsafeOkHttpClient()?.build())
-                .build()
-
-        var loginService: LoginService = retrofit.create(LoginService::class.java)
-
         /* recordActivity */
         nextBtn.setOnClickListener {
-            val nextIntent = Intent(this, RecordActivity::class.java)
+            val nextIntent = Intent(this, MicActivity::class.java)
             startActivity(nextIntent)
         }
 
-        /* loginBtn */
+        // Retrofit
+        initRetrofit()
+
+        // loginBtn
         btn_login.setOnClickListener{
-            var id = editText_id.text.toString()
-            var pw = editText_pw.text.toString()
+            var user_id = editText_id.text.toString()
+            var passwd = editText_pw.text.toString()
+            Log.d(TAG, "user_id: $user_id, passwd: $passwd");
 
-            Log.d("LOGIN", "id : $id pw : $pw");
-            loginService.requestLogin(id, pw).enqueue(object : Callback<Login> {
-                override fun onFailure(call: Call<Login>, t: Throwable) {
-                    Log.e("LOGIN", t.message!!)
-                    var dialog = AlertDialog.Builder(this@LoginActivity)
-                    dialog.setTitle("에러")
-                    dialog.setMessage("호출 실패")
-                    dialog.show()
-                }
-
-                override fun onResponse(call: Call<Login>, Login: Response<Login>) {
-                    this@LoginActivity.Login = Login.body()
-                    Log.d("LOGIN", "msg : " + this@LoginActivity.Login?.msg)
-                    Log.d("LOGIN", "code : " + this@LoginActivity.Login?.code)
-                }
-            })
+            var result : Boolean = postLogin(retrofitService, user_id!!, passwd!!)!!
+            Log.d(TAG, "LOGIN $result")
+            if(result){
+                val intent = Intent(this, RecordActivity::class.java)
+                intent.putExtra("user_id", user_id)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    // 안전하지 않음으로 HTTPS를 통과합니다.
-    fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {
-        return try {
-            val trustAllCerts = arrayOf<TrustManager>(
-                object : X509TrustManager {
-                    @Throws(CertificateException::class)
-                    override fun checkClientTrusted(
-                        chain: Array<X509Certificate?>?,
-                        authType: String?
-                    ) {
-                    }
+    private fun initRetrofit() {
+        retrofit = RetrofitClient.getRetrofit()
+        retrofitService = retrofit.create(RetrofitService::class.java)
+    }
 
-                    @Throws(CertificateException::class)
-                    override fun checkServerTrusted(
-                        chain: Array<X509Certificate?>?,
-                        authType: String?
-                    ) {
-                    }
-
-                    override fun getAcceptedIssuers(): Array<X509Certificate?>? {
-                        return arrayOf()
-                    }
+    private fun postLogin(service : RetrofitService, user_id : String, passwd : String) : Boolean{
+        var result : Boolean = false
+        service.login(user_id, passwd).enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Log.d(TAG, "Success")
+                if(response.body()!! == "Failed"){ // 데이터가 없을 시
+                    Log.d(TAG, "Login Failed")
+                } else {
+                    result = true
                 }
-            )
-            val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, SecureRandom())
-            val sslSocketFactory = sslContext.socketFactory
-            val builder = OkHttpClient.Builder()
-            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
-            builder.hostnameVerifier { hostname, session -> true }
-            builder
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d(TAG, "Fail : {$t}")
+            }
+        })
+        return result
     }
 }
