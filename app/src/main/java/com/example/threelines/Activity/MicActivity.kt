@@ -13,11 +13,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.threelines.Network.RetrofitClient
+import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
+import com.example.threelines.Data.Result
 import kotlinx.android.synthetic.main.activity_mic.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.io.File
 import java.io.IOException
 import java.lang.IllegalStateException
@@ -30,6 +37,9 @@ import java.lang.IllegalStateException
 * 서버 전송 : Retrofit
 * */
 class MicActivity : AppCompatActivity() {
+    private var TAG = "MIC"
+    private lateinit var retrofit : Retrofit
+    private lateinit var retrofitService : RetrofitService
 
     private var output: String? = null
     private var mediaRecorder: MediaRecorder? = null
@@ -46,6 +56,9 @@ class MicActivity : AppCompatActivity() {
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
         mediaRecorder?.setOutputFile(output)
+
+        // retrofit
+        initRetrofit()
 
         /* record_start */
         button_start_recording.setOnClickListener {
@@ -80,6 +93,27 @@ class MicActivity : AppCompatActivity() {
             var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file","test",requestBody)
 
         }
+    }
+
+    private fun initRetrofit() {
+        retrofit = RetrofitClient.getRetrofit()
+        retrofitService = retrofit.create(RetrofitService::class.java)
+    }
+
+    private fun postMic(service : RetrofitService, user_id : String, file : MultipartBody) : Boolean{
+        var result : Boolean = false
+        service.mic(user_id, file).enqueue(object : Callback<Result> {
+            override fun onResponse(call: Call<Result>, response: Response<Result>) {
+                Log.d(TAG, "Success")
+                Log.d(TAG, response.body().toString())
+            }
+
+            override fun onFailure(call: Call<Result>, t: Throwable) {
+                Log.d(TAG, "Fail : {$t}")
+            }
+
+        })
+        return result
     }
 
     private fun startRecording() {

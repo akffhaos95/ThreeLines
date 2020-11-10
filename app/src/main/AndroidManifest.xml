@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.threelines">
+    package="com.example.threelines"
+    android:networkSecurityConfig="@xml/network_security_config">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -13,12 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MicActivity"/>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".Activity.MicActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.RecordActivity" />
         <activity android:name=".Activity.TextActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity.RecordActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.RecordActivity" />
         </activity>
         <activity
             android:name=".Activity.SplashActivity"

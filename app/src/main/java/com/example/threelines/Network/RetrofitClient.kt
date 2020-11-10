@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private var retrofit: Retrofit? = null
-    private const val BASEURL = "https://jsonplaceholder.typicode.com/"
+    private const val BASEURL = "https://76baafb37243.ngrok.io/"
 
     fun getRetrofit(): Retrofit {
         val gson = GsonBuilder()
