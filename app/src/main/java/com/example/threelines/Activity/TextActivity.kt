@@ -44,7 +44,7 @@ class TextActivity : AppCompatActivity() {
         Log.d(TAG, "record_id : " + record_id)
 
         if (record_id != 0){
-            getTextList(retrofitService, record_id!!)!!
+            getTextList(retrofitService, record_id!!)
         }
     }
 
@@ -55,7 +55,7 @@ class TextActivity : AppCompatActivity() {
 
     // TextList 불러오기
     private fun getTextList(service : RetrofitService, record_id : Int){
-        var data : MutableList<Text>? = null
+        var data : MutableList<Text>?
         service.getText(record_id).enqueue(object : Callback<List<Text>> {
             override fun onResponse(call: Call<List<Text>>, response: Response<List<Text>>) {
                 Log.d(TAG, "Access Success")

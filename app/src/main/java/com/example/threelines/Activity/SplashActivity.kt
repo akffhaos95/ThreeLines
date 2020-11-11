@@ -52,7 +52,7 @@ class SplashActivity : AppCompatActivity() {
 
                 // Retrofit
                 initRetrofit()
-                postLogin(retrofitService, user_id!!, passwd!!)!!
+                postLogin(retrofitService, user_id!!, passwd!!)
             } else {
                 text_info.text = "로그인 정보가 없습니다."
                 Log.d(TAG, "Not Have LoginPreferences")

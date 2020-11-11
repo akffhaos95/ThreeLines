@@ -32,10 +32,7 @@ class RecordActivity : AppCompatActivity() {
 
         // Retrofit
         initRetrofit()
-    }
 
-    override fun onResume() {
-        super.onResume()
         // Intent get
         var intent : Intent = getIntent();
         var user_id : String? = intent.getStringExtra("user_id")
@@ -44,6 +41,15 @@ class RecordActivity : AppCompatActivity() {
         if (user_id != null) {
             getRecordList(retrofitService, user_id)
         }
+
+        refresh_layout.setOnRefreshListener {
+            getRecordList(retrofitService, user_id!!)
+            refresh_layout.isRefreshing = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     private fun initRetrofit() {
@@ -53,7 +59,7 @@ class RecordActivity : AppCompatActivity() {
 
     // RecordList 불러오기
     private fun getRecordList(service: RetrofitService, user_id: String) {
-        var data : MutableList<Record>? = null
+        var data : MutableList<Record>?
         service.getRecord(user_id).enqueue(object : Callback<List<Record>> {
             override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
                 Log.d(TAG, "Access Success")

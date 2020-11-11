@@ -42,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
             var passwd_ck = editText_pw_ck.text.toString()
 
             if(passwd == passwd_ck) {
-                postRegister(retrofitService, user_id!!, passwd!!)!!
+                postRegister(retrofitService, user_id, passwd)
             } else {
                 Toast.makeText(this, "비밀번호 체크", Toast.LENGTH_SHORT).show()
             }

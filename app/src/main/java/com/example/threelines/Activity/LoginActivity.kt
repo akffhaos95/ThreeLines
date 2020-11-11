@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
             var user_id = editText_id.text.toString()
             var passwd = editText_pw.text.toString()
             Log.d(TAG, "user_id: $user_id, passwd: $passwd")
-            postLogin(retrofitService, user_id!!, passwd!!, prefs!!)!!
+            postLogin(retrofitService, user_id, passwd)
         }
 
         // btn_register
@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 로그인
-    private fun postLogin(service : RetrofitService, user_id : String, passwd : String, pref : LoginPreferences) {
+    private fun postLogin(service : RetrofitService, user_id : String, passwd : String) {
         service.login(user_id, passwd).enqueue(object : Callback<Result>{
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
                 Log.d(TAG, "Access Success")
@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "Login Failed")
                 } else { // 로그인 성공
                     Log.d(TAG, "Login Success")
-                    saveLogin(pref, user_id, passwd)
+                    saveLogin(user_id, passwd)
                     val intent = Intent(applicationContext, RecordActivity::class.java)
                     intent.putExtra("user_id", user_id)
                     startActivity(intent)
@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun saveLogin(pref : LoginPreferences, user_id: String, passwd : String){
+    private fun saveLogin(user_id: String, passwd : String){
         if (ck_save.isChecked) {
             Log.d(TAG, "Saved")
             prefs = LoginPreferences(applicationContext)
