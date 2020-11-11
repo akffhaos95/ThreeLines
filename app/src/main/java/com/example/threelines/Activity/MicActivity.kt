@@ -3,7 +3,9 @@ package com.example.threelines.Activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
@@ -41,22 +43,38 @@ class MicActivity : AppCompatActivity() {
     private lateinit var retrofit : Retrofit
     private lateinit var retrofitService : RetrofitService
 
+    // MediaRecorder
     private var output: String? = null
     private var mediaRecorder: MediaRecorder? = null
     private var state: Boolean = false
     private var recordingStopped: Boolean = false
 
+    // MediaPlayer
+    private lateinit var mediaPlayer: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mic)
 
-        /* mediaRecorder */
-        output = Environment.DIRECTORY_DOWNLOADS + "/recording.mp3"
+        // Intent get
+        var intent : Intent = getIntent();
+        var user_id : String? = intent.getStringExtra("user_id")
+        Log.d(TAG, "user_id : " + user_id)
+
+        // MediaRecorder
+        output = Environment.getExternalStorageState() + "/recording.mp3"
+        Log.d(TAG, output.toString())
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
         mediaRecorder?.setOutputFile(output)
 
+        // MediaPlayer
+/*        btn_play.setOnClickListener{
+            mediaPlayer = MediaPlayer.create(this, )
+            mediaPlayer.start()
+        }
+*/
         // retrofit
         initRetrofit()
 

@@ -42,6 +42,12 @@ class RecordActivity : AppCompatActivity() {
             getRecordList(retrofitService, user_id)
         }
 
+        btn_mic.setOnClickListener{
+            val intent = Intent(applicationContext, MicActivity::class.java)
+            intent.putExtra("user_id", user_id)
+            startActivity(intent)
+        }
+
         refresh_layout.setOnRefreshListener {
             getRecordList(retrofitService, user_id!!)
             refresh_layout.isRefreshing = false

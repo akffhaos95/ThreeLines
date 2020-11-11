@@ -54,4 +54,10 @@
         android:layout_marginBottom="32dp"
         android:layout_marginRight="32dp"/>
 
+    <Button
+        android:layout_below="@id/button_send_audio"
+        android:id="@+id/btn_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="재생"/>
 </RelativeLayout>

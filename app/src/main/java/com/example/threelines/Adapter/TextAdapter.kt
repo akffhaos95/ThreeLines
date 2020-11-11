@@ -34,8 +34,12 @@ class TextHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     fun setListData(listdata: Text){
         itemView.idx.text = "${listdata.idx}"
         itemView.content.text = listdata.content
-        itemView.speaker_name.text = listdata.speaker_name
         itemView.start_t.text = listdata.start_t
         itemView.end_t.text = listdata.end_t
+        if(listdata.speaker_name == ""){
+            itemView.speaker_name.text = listdata.speaker_id.toString()
+        } else {
+            itemView.speaker_name.text = listdata.speaker_name
+        }
     }
 }

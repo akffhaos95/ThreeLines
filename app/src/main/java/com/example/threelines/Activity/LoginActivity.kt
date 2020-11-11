@@ -43,10 +43,14 @@ class LoginActivity : AppCompatActivity() {
 
         // btn_login
         btn_login.setOnClickListener{
-            var user_id = editText_id.text.toString()
+            val intent = Intent(applicationContext, MicActivity::class.java)
+            intent.putExtra("user_id", "test")
+            startActivity(intent)
+            /*var user_id = editText_id.text.toString()
             var passwd = editText_pw.text.toString()
             Log.d(TAG, "user_id: $user_id, passwd: $passwd")
             postLogin(retrofitService, user_id, passwd)
+             */
         }
 
         // btn_register

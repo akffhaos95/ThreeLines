@@ -18,4 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <Button
+        android:id="@+id/btn_mic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회의 녹음"/>
 </RelativeLayout>
