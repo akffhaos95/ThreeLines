@@ -1,15 +1,15 @@
-package com.example.threelines
+package com.example.threelines.Adapter
 
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threelines.Activity.TextActivity
 import com.example.threelines.Data.Record
+import com.example.threelines.R
 import kotlinx.android.synthetic.main.record_item.view.*
 
 class RecordAdapter : RecyclerView.Adapter<RecordHolder>(){

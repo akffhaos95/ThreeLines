@@ -16,7 +16,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 /*
 * RegisterActivity
-* */
+* editText_id_r, editText_pw_r, editText_pw_ck -> EditText
+* btn_register, btn_cancel -> Button
+* 
+* 회원가입 성공 -> LoginActivity
+* 회원가입 실패 -> 그대로
+* Retrofit -> postRegister
+*/
 class RegisterActivity : AppCompatActivity() {
     private var TAG = "REGISTER"
     private lateinit var retrofit : Retrofit
@@ -41,7 +47,8 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "비밀번호 체크", Toast.LENGTH_SHORT).show()
             }
         }
-        cancel.setOnClickListener{
+
+        btn_cancel.setOnClickListener{
             finish()
         }
     }
@@ -51,6 +58,7 @@ class RegisterActivity : AppCompatActivity() {
         retrofitService = retrofit.create(RetrofitService::class.java)
     }
 
+    // 회원가입
     private fun postRegister(service : RetrofitService, user_id : String, passwd : String) {
         service.register(user_id, passwd).enqueue(object : Callback<Result>{
             override fun onResponse(call: Call<Result>, response: Response<Result>) {

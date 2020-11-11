@@ -9,7 +9,7 @@ import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
 import com.example.threelines.Data.Result
-import com.example.threelines.LoginPreferences
+import com.example.threelines.Data.LoginPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,13 +17,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 /*
 * LoginActivity
-* 로그인 화면
 * editText_id, editText_pw -> EditText
 * loginBtn -> Button
-* saveBtn -> CheckBox
-* 로그인 정보 저장시에 ID, PW를 SharedPreference에 저장
-* 로그인 : Retrofit
-* */
+* saveLogin -> CheckBox
+* 로그인 정보 저장 -> user_id, passwd를 LoginPreferences에 저장
+*
+* 로그인 성공 -> RecordActivity
+* Retrofit -> postLogin
+*/
 class LoginActivity : AppCompatActivity() {
     private var TAG = "LOGIN"
     private lateinit var retrofit : Retrofit
@@ -33,7 +34,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        prefs = LoginPreferences(applicationContext)
+
+        // LoginPreferences 불러오기
+       prefs = LoginPreferences(applicationContext)
 
         // Retrofit
         initRetrofit()
@@ -42,17 +45,11 @@ class LoginActivity : AppCompatActivity() {
         btn_login.setOnClickListener{
             var user_id = editText_id.text.toString()
             var passwd = editText_pw.text.toString()
-            Log.d(TAG, "user_id: $user_id, passwd: $passwd");
-
+            Log.d(TAG, "user_id: $user_id, passwd: $passwd")
             postLogin(retrofitService, user_id!!, passwd!!, prefs!!)!!
         }
-        btn_login.setOnClickListener{
-            var user_id = editText_id.text.toString()
-            var passwd = editText_pw.text.toString()
-            Log.d(TAG, "user_id: $user_id, passwd: $passwd");
 
-            postLogin(retrofitService, user_id!!, passwd!!, prefs!!)!!
-        }
+        // btn_register
         btn_register.setOnClickListener{
             val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
@@ -64,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
         retrofitService = retrofit.create(RetrofitService::class.java)
     }
 
+    // 로그인
     private fun postLogin(service : RetrofitService, user_id : String, passwd : String, pref : LoginPreferences) {
         service.login(user_id, passwd).enqueue(object : Callback<Result>{
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
@@ -88,11 +86,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveLogin(pref : LoginPreferences, user_id: String, passwd : String){
         if (ck_save.isChecked) {
-            Log.d(TAG, "Checked")
+            Log.d(TAG, "Saved")
             prefs = LoginPreferences(applicationContext)
             prefs.user_id = user_id
             prefs.passwd = passwd
-            Log.d(TAG, user_id + passwd)
         }
     }
 }

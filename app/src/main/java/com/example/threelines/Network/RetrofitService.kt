@@ -15,6 +15,7 @@ interface RetrofitService {
         @Field("passwd") passwd : String
     ): Call<Result>
 
+    // 안됨
     @FormUrlEncoded
     @POST("register_app/")
     fun register(
@@ -22,6 +23,7 @@ interface RetrofitService {
         @Field("passwd") passwd : String
     ): Call<Result>
 
+    // 안됨
     @FormUrlEncoded
     @Multipart
     @POST("/mic_app/")
@@ -39,4 +41,13 @@ interface RetrofitService {
     fun getText(
         @Path(value = "record_id", encoded = true) record_id: Int
     ): Call<List<Text>>
+
+    // 안됨
+    @FormUrlEncoded
+    @Multipart
+    @POST("edit_app/")
+    fun edit(
+        @Part("idx") user_id : String,
+        @Part("content") content : String
+    ): Call<Result>
 }

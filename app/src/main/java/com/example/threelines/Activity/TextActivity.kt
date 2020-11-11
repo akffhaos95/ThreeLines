@@ -9,7 +9,7 @@ import com.example.threelines.Data.Text
 import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
-import com.example.threelines.TextAdapter
+import com.example.threelines.Adapter.TextAdapter
 import kotlinx.android.synthetic.main.activity_text.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,14 +34,18 @@ class TextActivity : AppCompatActivity() {
 
         // Retrofit
         initRetrofit()
+    }
 
+    override fun onResume() {
+        super.onResume()
         // Intent get
         var intent : Intent = getIntent();
         var record_id : Int? = intent.getIntExtra("record_id", 0)
+        Log.d(TAG, "record_id : " + record_id)
 
-       if (record_id != 0){
-           getTextList(retrofitService, record_id!!)!!
-       }
+        if (record_id != 0){
+            getTextList(retrofitService, record_id!!)!!
+        }
     }
 
     private fun initRetrofit() {
@@ -49,14 +53,16 @@ class TextActivity : AppCompatActivity() {
         retrofitService = retrofit.create(RetrofitService::class.java)
     }
 
+    // TextList 불러오기
     private fun getTextList(service : RetrofitService, record_id : Int){
         var data : MutableList<Text>? = null
         service.getText(record_id).enqueue(object : Callback<List<Text>> {
             override fun onResponse(call: Call<List<Text>>, response: Response<List<Text>>) {
-                Log.d(TAG, "Success")
+                Log.d(TAG, "Access Success")
                 if(response.body() == null){ // 데이터가 없을 시
                     Log.d(TAG, "No data")
                 } else {
+                    Log.d(TAG, "Data Access Success")
                     data = response.body()!!.toMutableList()
 
                     // RecyclerView

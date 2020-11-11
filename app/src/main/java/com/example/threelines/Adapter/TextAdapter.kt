@@ -1,10 +1,11 @@
-package com.example.threelines
+package com.example.threelines.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threelines.Data.Text
+import com.example.threelines.R
 import kotlinx.android.synthetic.main.text_item.view.*
 
 class TextAdapter : RecyclerView.Adapter<TextHolder>(){

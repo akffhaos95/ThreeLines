@@ -20,7 +20,7 @@
                     android:orientation="vertical"
                     android:layout_weight="3">
                     <ImageView
-                        android:id="@+id/cancel"
+                        android:id="@+id/btn_cancel"
                         style="@style/parent"
                         android:background="@drawable/ic_login_bk"
                         android:contentDescription="login background" />

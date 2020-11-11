@@ -1,4 +1,4 @@
-package com.example.threelines
+package com.example.threelines.Data
 
 import android.content.Context
 import android.content.SharedPreferences
