@@ -9,13 +9,12 @@ import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
 import com.example.threelines.Data.Result
-import com.example.threelines.RegisterActivity
+import com.example.threelines.LoginPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-
 /*
 * LoginActivity
 * 로그인 화면
@@ -29,10 +28,12 @@ class LoginActivity : AppCompatActivity() {
     private var TAG = "LOGIN"
     private lateinit var retrofit : Retrofit
     private lateinit var retrofitService: RetrofitService
+    companion object { lateinit var prefs : LoginPreferences }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        prefs = LoginPreferences(applicationContext)
 
         // Retrofit
         initRetrofit()
@@ -43,12 +44,17 @@ class LoginActivity : AppCompatActivity() {
             var passwd = editText_pw.text.toString()
             Log.d(TAG, "user_id: $user_id, passwd: $passwd");
 
-            postLogin(retrofitService, user_id!!, passwd!!)!!
+            postLogin(retrofitService, user_id!!, passwd!!, prefs!!)!!
         }
+        btn_login.setOnClickListener{
+            var user_id = editText_id.text.toString()
+            var passwd = editText_pw.text.toString()
+            Log.d(TAG, "user_id: $user_id, passwd: $passwd");
 
-        // btn_register
-        btn_register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            postLogin(retrofitService, user_id!!, passwd!!, prefs!!)!!
+        }
+        btn_register.setOnClickListener{
+            val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
         }
     }
@@ -58,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         retrofitService = retrofit.create(RetrofitService::class.java)
     }
 
-    private fun postLogin(service : RetrofitService, user_id : String, passwd : String) {
+    private fun postLogin(service : RetrofitService, user_id : String, passwd : String, pref : LoginPreferences) {
         service.login(user_id, passwd).enqueue(object : Callback<Result>{
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
                 Log.d(TAG, "Access Success")
@@ -66,10 +72,11 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "Login Failed")
                 } else { // 로그인 성공
                     Log.d(TAG, "Login Success")
-
+                    saveLogin(pref, user_id, passwd)
                     val intent = Intent(applicationContext, RecordActivity::class.java)
                     intent.putExtra("user_id", user_id)
                     startActivity(intent)
+                    finish()
                 }
             }
             override fun onFailure(call: Call<Result>, t: Throwable) {
@@ -77,5 +84,15 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun saveLogin(pref : LoginPreferences, user_id: String, passwd : String){
+        if (ck_save.isChecked) {
+            Log.d(TAG, "Checked")
+            prefs = LoginPreferences(applicationContext)
+            prefs.user_id = user_id
+            prefs.passwd = passwd
+            Log.d(TAG, user_id + passwd)
+        }
     }
 }

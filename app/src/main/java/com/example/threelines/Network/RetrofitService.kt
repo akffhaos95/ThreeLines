@@ -30,15 +30,13 @@ interface RetrofitService {
         @Part ("file") file : MultipartBody
     ): Call<Result>
 
-    @GET("record_app")
+    @GET("record_app/{user_id}")
     fun getRecord(
-        @Query("user_id") user_id: String
+        @Path(value = "user_id", encoded = true) user_id: String
     ): Call<List<Record>>
 
-    @FormUrlEncoded
-    @GET("/text_app")
+    @GET("text_app/{record_id}")
     fun getText(
-        @Field("user_id") user_id: String,
-        @Field("record_id") record_id: Int
+        @Path(value = "record_id", encoded = true) record_id: Int
     ): Call<List<Text>>
 }

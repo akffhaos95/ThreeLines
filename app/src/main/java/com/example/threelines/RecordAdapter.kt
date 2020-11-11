@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threelines.Activity.TextActivity
 import com.example.threelines.Data.Record
@@ -26,8 +27,8 @@ class RecordAdapter : RecyclerView.Adapter<RecordHolder>(){
         holder.itemView.setOnClickListener{
             Log.d("ADAPTER", "Clicked ${holder.itemView?.record_id.text}")
             val intent = Intent(holder.itemView?.context, TextActivity::class.java)
-            intent.putExtra("record_id", holder.itemView?.record_id.text)
-            ContextCompat.startActivity(holder.itemView.context, intent, null)
+            intent.putExtra("record_id", holder.itemView?.record_id.text.toString().toInt())
+            startActivity(holder.itemView.context, intent, null)
         }
     }
 

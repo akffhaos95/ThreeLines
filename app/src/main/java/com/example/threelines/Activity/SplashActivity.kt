@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
 import com.example.threelines.Data.Result
+import com.example.threelines.LoginPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,27 +30,25 @@ class SplashActivity : AppCompatActivity() {
     var user_id: String? = ""
     var passwd: String? = ""
     var loginSuccess: Boolean = false
+    companion object { lateinit var prefs : LoginPreferences }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        prefs = LoginPreferences(applicationContext)
 
-        val pref = this.getPreferences(0)
-        if (pref.contains("user_id") and pref.contains("passwd")) {
+        if (prefs.user_id != "") {
             /* 로그인 정보 존재 */
-            user_id = pref.getString("user_id", "")
-            passwd = pref.getString("passwd", "")
+            user_id = prefs.user_id
+            passwd = prefs.passwd
+            Log.d("test", user_id +  passwd)
 
             // Retrofit
             initRetrofit()
-            loginSuccess = postLogin(retrofitService, user_id!!, passwd!!)!!
-        }
-        if (loginSuccess){ // 로그인 성공, 메인 화면으로 이동
-            val intent = Intent(this, RecordActivity::class.java)
-            startActivity(intent);
-        } else { // 로그인 실패, 로그인 화면으로 이동
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent);
+            postLogin(retrofitService, user_id!!, passwd!!)!!
+        } else {
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }
@@ -58,22 +58,31 @@ class SplashActivity : AppCompatActivity() {
         retrofitService = retrofit.create(RetrofitService::class.java)
     }
 
-    private fun postLogin(service : RetrofitService, user_id : String, passwd : String) : Boolean{
-        var result : Boolean = false
+    private fun postLogin(service : RetrofitService, user_id : String, passwd : String) {
         service.login(user_id, passwd).enqueue(object : Callback<Result>{
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
-                Log.d(TAG, "Success")
-                if(response.body() == null){ // 데이터가 없을 시
+                Log.d(TAG, "Access Success")
+                if(response.body()!!.status.toString() == "0"){ // 데이터가 없을 시
                     Log.d(TAG, "Login Failed")
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                    Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                    finish()
                 } else {
-                    Log.d(TAG, response.toString())
-                    result = true
+                    Log.d(TAG, "Login Success")
+                    Toast.makeText(applicationContext, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(applicationContext, RecordActivity::class.java)
+                    intent.putExtra("user_id", user_id)
+                    startActivity(intent)
                 }
+                finish()
             }
             override fun onFailure(call: Call<Result>, t: Throwable) {
                 Log.d(TAG, "Fail : {$t}")
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         })
-        return result
     }
 }
