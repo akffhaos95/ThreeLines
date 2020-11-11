@@ -30,6 +30,9 @@ import retrofit2.Retrofit
 import java.io.File
 import java.io.IOException
 import java.lang.IllegalStateException
+import java.util.*
+import androidx.core.net.toUri as toUri
+
 /*
 * MicActivity
 * 회의 녹음 -> 서버로 전송
@@ -62,15 +65,15 @@ class MicActivity : AppCompatActivity() {
         Log.d(TAG, "user_id : " + user_id)
 
         // MediaRecorder
-        output = Environment.getExternalStorageState() + "/recording.mp3"
-        Log.d(TAG, output.toString())
+        val filename : String = "${externalCacheDir!!.absolutePath}/" + Date().getTime().toString() + ".mp3"
+        Log.d(TAG, filename)
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        mediaRecorder?.setOutputFile(output)
+        mediaRecorder?.setOutputFile(filename)
 
         // MediaPlayer
-/*        btn_play.setOnClickListener{
+/*      btn_play.setOnClickListener{
             mediaPlayer = MediaPlayer.create(this, )
             mediaPlayer.start()
         }
