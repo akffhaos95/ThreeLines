@@ -45,7 +45,7 @@ class RecordHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         itemView.record_id.text = "${listdata.record_id}"
         itemView.title.text = listdata.title
         itemView.uploaded_date.text = listdata.uploaded_date
-        itemView.people.text = "${listdata.people}"
+        itemView.people.text = "${listdata.people}인"
         itemView.location.text = listdata.location
 
         val random = Random()

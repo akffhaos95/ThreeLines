@@ -2,6 +2,7 @@ package com.example.threelines.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ class RecordActivity : AppCompatActivity() {
     private var TAG = "RECORD"
     private lateinit var retrofit : Retrofit
     private lateinit var retrofitService: RetrofitService
+    private lateinit var user_id : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +36,9 @@ class RecordActivity : AppCompatActivity() {
         initRetrofit()
 
         // Intent get
-        var intent : Intent = getIntent();
-        var user_id : String? = intent.getStringExtra("user_id")
-        Log.d(TAG, "user_id : " + user_id)
+        var intent : Intent = intent;
+        user_id = intent.getStringExtra("user_id")!!
+        Log.d(TAG, "Intent user_id : $user_id")
 
         if (user_id != null) {
             getRecordList(retrofitService, user_id)
@@ -49,13 +51,9 @@ class RecordActivity : AppCompatActivity() {
         }
 
         refresh_layout.setOnRefreshListener {
-            getRecordList(retrofitService, user_id!!)
+            getRecordList(retrofitService, user_id)
             refresh_layout.isRefreshing = false
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     private fun initRetrofit() {

@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
     // RecordActivity로 이동
     private fun gotoRecord(user_id: String) {
         text_info.text = "녹음 리스트로 이동합니다..."
-        val intent = Intent(applicationContext, LoginActivity::class.java)
+        val intent = Intent(applicationContext, RecordActivity::class.java)
         intent.putExtra("user_id", user_id)
         startActivity(intent)
         finish()
@@ -92,11 +92,9 @@ class SplashActivity : AppCompatActivity() {
                 Log.d(TAG, "Access Success")
                 if(response.body()!!.status.toString() == "0"){ // 로그인 실패
                     Log.d(TAG, "Login Failed")
-                    Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
                     gotoLogin()
                 } else {
                     Log.d(TAG, "Login Success") // 로그인 성공
-                    Toast.makeText(applicationContext, "로그인 성공", Toast.LENGTH_SHORT).show()
                     gotoRecord(user_id)
                 }
             }

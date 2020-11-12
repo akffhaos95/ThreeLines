@@ -1,5 +1,6 @@
 package com.example.threelines.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class TextHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         itemView.content.text = listdata.content
         itemView.start_t.text = listdata.start_t
         itemView.end_t.text = listdata.end_t
+
         if(listdata.speaker_name == ""){
             itemView.speaker_name.text = listdata.speaker_id.toString()
         } else {

@@ -65,11 +65,13 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d(TAG, "Access Success")
                 if(response.body()!!.status.toString() == "0"){ // 회원가입 실패
                     Log.d(TAG, "Register Failed")
-                } else { // 회원가입 성공
+                    Toast.makeText(applicationContext, "이미 존재하는 아이디 입니다", Toast.LENGTH_SHORT).show()
+                } else{ // 회원가입 성공
                     Log.d(TAG, "Register Success")
-
+                    Toast.makeText(applicationContext, "회원가입 성공", Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, LoginActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
             override fun onFailure(call: Call<Result>, t: Throwable) {
