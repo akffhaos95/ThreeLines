@@ -4,7 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.threelines.Data.Record
 import com.example.threelines.Network.RetrofitClient
@@ -22,7 +27,7 @@ import retrofit2.Retrofit
 * item 클릭 -> TextActivity(record_id)
 * Retrofit -> getRecordList
 */
-class RecordActivity : AppCompatActivity() {
+class RecordActivity : Fragment(R.layout.activity_record) {
     private var TAG = "RECORD"
     private lateinit var retrofit : Retrofit
     private lateinit var retrofitService: RetrofitService
@@ -30,13 +35,12 @@ class RecordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record)
 
         // Retrofit
         initRetrofit()
 
         // Intent get
-        var intent : Intent = intent;
+        var intent : Intent = activity!!.intent;
         user_id = intent.getStringExtra("user_id")!!
         Log.d(TAG, "Intent user_id : $user_id")
 
@@ -45,7 +49,7 @@ class RecordActivity : AppCompatActivity() {
         }
 
         btn_mic.setOnClickListener{
-            val intent = Intent(applicationContext, MicActivity::class.java)
+            val intent = Intent(activity!!.applicationContext, MicActivity::class.java)
             intent.putExtra("user_id", user_id)
             startActivity(intent)
         }
@@ -77,7 +81,7 @@ class RecordActivity : AppCompatActivity() {
                     var adapter = RecordAdapter()
                     adapter.listData = data!!
                     recyclerView.adapter = adapter
-                    recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                    recyclerView.layoutManager = LinearLayoutManager(activity!!.applicationContext)
                 }
             }
 

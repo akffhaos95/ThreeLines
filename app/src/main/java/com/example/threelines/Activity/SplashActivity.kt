@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
     // RecordActivity로 이동
     private fun gotoRecord(user_id: String) {
         text_info.text = "녹음 리스트로 이동합니다..."
-        val intent = Intent(applicationContext, RecordActivity::class.java)
+        val intent = Intent(applicationContext, MainActivity::class.java)
         intent.putExtra("user_id", user_id)
         startActivity(intent)
         finish()

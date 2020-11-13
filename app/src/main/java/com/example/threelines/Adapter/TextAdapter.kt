@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.threelines.Data.Text
 import com.example.threelines.R
 import kotlinx.android.synthetic.main.text_item.view.*
+import android.util.Log.d as d1
 
 class TextAdapter : RecyclerView.Adapter<TextHolder>(){
     var listData = mutableListOf<Text>()
@@ -35,10 +36,25 @@ class TextHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     fun setListData(listdata: Text){
         itemView.idx.text = "${listdata.idx}"
         itemView.content.text = listdata.content
-        itemView.start_t.text = listdata.start_t
-        itemView.end_t.text = listdata.end_t
 
-        if(listdata.speaker_name == ""){
+        var start_t = listdata.start_t
+        var end_t = listdata.end_t
+
+        var time : Int = end_t.substring(0,1).toInt() - start_t.substring(0,1).toInt()
+        var min : Int = end_t.substring(2,4).toInt() - start_t.substring(2,4).toInt()
+        var sec : Int = end_t.substring(5).toInt() - start_t.substring(5).toInt()
+
+        if (min < 0) {
+            min += 60
+            time -= 1
+        }
+        if (sec < 0) {
+            sec += 1000
+            min -= 1
+        }
+        itemView.time.text = "${time.toString()}:${min.toString()}.${sec.toString()}"
+
+        if(listdata.speaker_name == null){
             itemView.speaker_name.text = listdata.speaker_id.toString()
         } else {
             itemView.speaker_name.text = listdata.speaker_name

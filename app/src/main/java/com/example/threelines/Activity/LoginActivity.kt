@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                 } else { // 로그인 성공
                     Log.d(TAG, "Login Success")
                     saveLogin(user_id, passwd)
-                    val intent = Intent(applicationContext, RecordActivity::class.java)
+                    val intent = Intent(applicationContext, MainActivity::class.java)
                     intent.putExtra("user_id", user_id)
                     startActivity(intent)
                     finish()

@@ -13,6 +13,10 @@ import com.example.threelines.Activity.TextActivity
 import com.example.threelines.Data.Record
 import com.example.threelines.R
 import kotlinx.android.synthetic.main.record_item.view.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RecordAdapter : RecyclerView.Adapter<RecordHolder>(){
@@ -44,9 +48,9 @@ class RecordHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     fun setListData(listdata: Record){
         itemView.record_id.text = "${listdata.record_id}"
         itemView.title.text = listdata.title
-        itemView.uploaded_date.text = listdata.uploaded_date
         itemView.people.text = "${listdata.people}인"
         itemView.location.text = listdata.location
+        itemView.uploaded_date.text = listdata.uploaded_date
 
         val random = Random()
         var color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))

@@ -78,7 +78,7 @@
                             <EditText
                                 android:id="@+id/editText_pw_r"
                                 style="@style/modifiedEditText"
-                                android:inputType="text"
+                                android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:hint="Password"/>
                         </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +89,7 @@
                             <EditText
                                 android:id="@+id/editText_pw_ck"
                                 style="@style/modifiedEditText"
-                                android:inputType="textEmailAddress"
+                                android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:hint="Password Check"/>
                         </com.google.android.material.textfield.TextInputLayout>

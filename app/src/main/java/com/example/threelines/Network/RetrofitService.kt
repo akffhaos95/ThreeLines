@@ -22,11 +22,13 @@ interface RetrofitService {
         @Field("passwd") passwd : String
     ): Call<Result>
 
-    // 안됨
     @Multipart
     @POST("mic_app/")
     fun mic(
+        @Part("title") title: String,
         @Part("user_id") user_id: String,
+        @Part("people") people : Int,
+        @Part("location") location : String,
         @Part file: MultipartBody.Part
     ): Call<Result>
 

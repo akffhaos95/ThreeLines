@@ -39,7 +39,7 @@
             android:layout_marginRight="8dp"
             android:text="Simple Title"
             android:textColor="@color/title_text_color"
-            app:layout_constraintEnd_toStartOf="@+id/txt_date"
+            app:layout_constraintEnd_toStartOf="@+id/time"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,24 +54,13 @@
             android:text="Lon. Class eos. Nunc eros libero, interdum blandit dolor dignissim, luctus suscipit magna. Ut magna nulla, posuere sed odio nec, consequat vulputate tortor. Praesent in venenatis arcu. Sed quis mi eget ex ullamcorper venenatis a ac diam. Aenean ultricies ligula nec eleifend ultricies."
             android:textColor="@color/context_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/txt_date"
+            app:layout_constraintEnd_toEndOf="@+id/time"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/speaker_name"
             app:layout_constraintTop_toBottomOf="@+id/speaker_name" />
 
         <TextView
-            android:id="@+id/start_t"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:text="22 Jan, 2020"
-            android:textColor="@color/context_text_color"
-            app:layout_constraintBottom_toBottomOf="@+id/speaker_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/speaker_name" />
-        <TextView
-            android:id="@+id/end_t"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="4dp"
