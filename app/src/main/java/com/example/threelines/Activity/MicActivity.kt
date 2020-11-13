@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -55,6 +57,7 @@ class MicActivity : Fragment(R.layout.activity_mic) {
         initRetrofit()
 
         var AUDIO_FILE_PATH : String = activity!!.externalCacheDir?.absolutePath + "/"+ user_id + "." + Date().time.toString()+".wav"
+
         // https://github.com/squti/Android-Wave-Recorder
         val waveRecorder = WaveRecorder(filePath = AUDIO_FILE_PATH)
 

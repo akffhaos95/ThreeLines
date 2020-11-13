@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fragment"
         android:layout_weight="1"
         android:layout_width="match_parent"
