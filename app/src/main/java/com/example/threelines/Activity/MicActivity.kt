@@ -47,6 +47,10 @@ class MicActivity : Fragment(R.layout.activity_mic) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Intent get
         var intent: Intent? = activity!!.intent
