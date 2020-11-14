@@ -33,10 +33,6 @@ class RecordActivity : Fragment(R.layout.activity_record) {
     private lateinit var retrofitService: RetrofitService
     private lateinit var user_id : String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,12 +46,6 @@ class RecordActivity : Fragment(R.layout.activity_record) {
 
         if (user_id != null) {
             getRecordList(retrofitService, user_id)
-        }
-
-        btn_mic.setOnClickListener{
-            val intent = Intent(activity!!.applicationContext, MicActivity::class.java)
-            intent.putExtra("user_id", user_id)
-            startActivity(intent)
         }
 
         refresh_layout.setOnRefreshListener {

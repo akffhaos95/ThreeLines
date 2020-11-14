@@ -94,8 +94,6 @@ class MicActivity : Fragment(R.layout.activity_mic) {
             Log.d(TAG, "Record End")
             Toast.makeText(activity!!.applicationContext, "녹음 끝", Toast.LENGTH_SHORT).show()
             waveRecorder.stopRecording()
-
-
         }
 /*
         //Pause
