@@ -22,16 +22,6 @@ interface RetrofitService {
         @Field("passwd") passwd : String
     ): Call<Result>
 
-    @Multipart
-    @POST("mic_app/")
-    fun mic(
-        @Part("title") title: String,
-        @Part("user_id") user_id: String,
-        @Part("people") people : Int,
-        @Part("location") location : String,
-        @Part file: MultipartBody.Part
-    ): Call<Result>
-
     @GET("record_app/{user_id}")
     fun getRecord(
         @Path(value = "user_id", encoded = true) user_id: String
@@ -42,12 +32,32 @@ interface RetrofitService {
         @Path(value = "record_id", encoded = true) record_id: Int
     ): Call<List<Text>>
 
+    @Multipart
+    @POST("mic_app/")
+    fun mic(
+        @Part("title") title: String,
+        @Part("user_id") user_id: String,
+        @Part("people") people : Int,
+        @Part("location") location : String,
+        @Part file: MultipartBody.Part
+    ): Call<Result>
+
     // 안됨
     @FormUrlEncoded
     @Multipart
-    @POST("edit_app/")
-    fun edit(
-        @Part("idx") user_id : String,
+    @POST("edit_text_app/")
+    fun edit_text(
+        @Part("idx") idx : Int,
         @Part("content") content : String
     ): Call<Result>
+
+    // 안됨
+    @FormUrlEncoded
+    @Multipart
+    @POST("edit_speaker_app/")
+    fun edit_speaker(
+        @Part("speaker_id") speaker_id : Int,
+        @Part("speaker_name") speaker_name : String
+    ): Call<Result>
+
 }
