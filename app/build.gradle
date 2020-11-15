@@ -25,6 +25,7 @@ android {
 }
 
 repositories {
+    jcenter()
     maven {
         url "https://jitpack.io"
     }
@@ -53,6 +54,9 @@ dependencies {
     implementation 'com.github.squti:Android-Wave-Recorder:1.5.0'
     implementation 'com.cleveroad:audiovisualization:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Audio Visualizer
+    implementation 'com.tyorikan:voice-recording-visualizer:1.0.3@aar'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

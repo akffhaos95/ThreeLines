@@ -4,18 +4,19 @@
     android:layout_height="60dp"
     android:layout_width="match_parent">
 
+<!--    https://www.flaticon.com/kr/search?word=list-->
     <item
         android:id="@+id/btn_record_fragment"
-        android:icon="@drawable/aar_ic_play"
-        android:title="a" />
+        android:icon="@drawable/ic_record"
+        android:title="회의 목록" />
 
     <item
         android:id="@+id/btn_mic_fragment"
-        android:icon="@drawable/aar_ic_pause"
-        android:title="b" />
+        android:icon="@drawable/ic_mic"
+        android:title="회의하기" />
 
     <item
         android:id="@+id/btn_setting_fragment"
-        android:icon="@drawable/aar_ic_rec"
-        android:title="c" />
+        android:icon="@drawable/ic_setting"
+        android:title="설정" />
 </menu>

@@ -21,6 +21,8 @@ import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
 import com.github.squti.androidwaverecorder.WaveRecorder
+import com.tyorikan.voicerecordingvisualizer.RecordingSampler
+import com.tyorikan.voicerecordingvisualizer.VisualizerView
 import kotlinx.android.synthetic.main.activity_mic.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -117,7 +119,7 @@ class MicActivity : Fragment(R.layout.activity_mic) {
                 dialogView
             )
             builder.setView(dialogView)
-                .setPositiveButton("확인") { dialogInterface, i ->
+                .setPositiveButton("확인") { _, _ ->
                     Log.d(TAG, "Send Audio")
                     Toast.makeText(activity!!.applicationContext, "오디오를 전송합니다.", Toast.LENGTH_SHORT).show()
 
@@ -141,14 +143,14 @@ class MicActivity : Fragment(R.layout.activity_mic) {
                     // Retrofit 전송
                     postMic(
                         retrofitService,
-                        title!!,
+                        title,
                         user_id!!,
-                        people.toInt()!!,
-                        location!!,
+                        people.toInt(),
+                        location,
                         uploadFile
                     )
                 }
-                .setNegativeButton("취소") { dialogInterface, i ->
+                .setNegativeButton("취소") { _, _ ->
 
                 }
                 .show()

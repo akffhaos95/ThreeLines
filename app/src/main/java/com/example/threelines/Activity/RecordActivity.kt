@@ -1,5 +1,6 @@
 package com.example.threelines.Activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -47,7 +48,6 @@ class RecordActivity : Fragment(R.layout.activity_record) {
         if (user_id != null) {
             getRecordList(retrofitService, user_id)
         }
-
         refresh_layout.setOnRefreshListener {
             getRecordList(retrofitService, user_id)
             refresh_layout.isRefreshing = false
