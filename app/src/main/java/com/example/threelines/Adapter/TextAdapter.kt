@@ -1,10 +1,14 @@
 package com.example.threelines.Adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.threelines.Activity.EditTextActivity
+import com.example.threelines.Data.Speaker
 import com.example.threelines.Data.Text
 import com.example.threelines.R
 import kotlinx.android.synthetic.main.text_item.view.*
@@ -23,7 +27,11 @@ class TextAdapter : RecyclerView.Adapter<TextHolder>(){
         holder.setListData(data)
 
         holder.itemView.setOnClickListener{
-            // 수정 페이지 (dialog)
+            Log.d("ADAPTER", "Clicked ${holder.itemView.idx.text}")
+            val intent = Intent(holder.itemView.context, EditTextActivity::class.java)
+            intent.putExtra("idx", holder.itemView.idx.text.toString())
+            intent.putExtra("content", holder.itemView.content.text)
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
     }
 

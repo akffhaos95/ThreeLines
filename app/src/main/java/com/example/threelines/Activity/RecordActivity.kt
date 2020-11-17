@@ -45,9 +45,8 @@ class RecordActivity : Fragment(R.layout.activity_record) {
         user_id = intent.getStringExtra("user_id")!!
         Log.d(TAG, "Intent user_id : $user_id")
 
-        if (user_id != null) {
-            getRecordList(retrofitService, user_id)
-        }
+        getRecordList(retrofitService, user_id)
+
         refresh_layout.setOnRefreshListener {
             getRecordList(retrofitService, user_id)
             refresh_layout.isRefreshing = false

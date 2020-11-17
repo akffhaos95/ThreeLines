@@ -47,10 +47,6 @@ class MicActivity : Fragment(R.layout.activity_mic) {
     private lateinit var retrofit: Retrofit
     private lateinit var retrofitService: RetrofitService
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

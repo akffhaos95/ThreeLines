@@ -3,6 +3,7 @@ package com.example.threelines.Network
 import com.example.threelines.Data.Record
 import com.example.threelines.Data.Text
 import com.example.threelines.Data.Result
+import com.example.threelines.Data.Speaker
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -42,22 +43,24 @@ interface RetrofitService {
         @Part file: MultipartBody.Part
     ): Call<Result>
 
-    // 안됨
     @FormUrlEncoded
-    @Multipart
     @POST("edit_text_app/")
     fun edit_text(
-        @Part("idx") idx : Int,
-        @Part("content") content : String
+        @Field("idx") idx : Int,
+        @Field("content") content : String
     ): Call<Result>
+
+    @GET("edit_speaker_app/{record_id}")
+    fun get_edit_speaker(
+        @Path(value = "record_id", encoded = true) record_id: Int
+    ): Call<List<Speaker>>
 
     // 안됨
     @FormUrlEncoded
-    @Multipart
     @POST("edit_speaker_app/")
-    fun edit_speaker(
-        @Part("speaker_id") speaker_id : Int,
-        @Part("speaker_name") speaker_name : String
+    fun post_edit_speaker(
+        @Field("record_id") record_id : Int,
+        @Field("speaker_id") speaker_id : Int,
+        @Field("speaker_name") speaker_name : String
     ): Call<Result>
-
 }
