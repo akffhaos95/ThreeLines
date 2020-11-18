@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.threelines.Adapter.SpeakerAdapter
-import com.example.threelines.Adapter.TextAdapter
 import com.example.threelines.Data.Speaker
-import com.example.threelines.Data.Text
 import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
@@ -58,7 +56,7 @@ class SpeakerEditActivity : AppCompatActivity() {
                     data = response.body()!!.toMutableList()
 
                     // RecyclerView
-                    var adapter = SpeakerAdapter()
+                    var adapter = SpeakerAdapter(record_id)
                     adapter.listData = data!!
                     recyclerView.adapter = adapter
                     recyclerView.layoutManager = LinearLayoutManager(applicationContext)

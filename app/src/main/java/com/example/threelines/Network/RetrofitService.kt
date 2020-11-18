@@ -55,11 +55,10 @@ interface RetrofitService {
         @Path(value = "record_id", encoded = true) record_id: Int
     ): Call<List<Speaker>>
 
-    // 안됨
     @FormUrlEncoded
-    @POST("edit_speaker_app/")
+    @POST("edit_speaker_app/{record_id}")
     fun post_edit_speaker(
-        @Field("record_id") record_id : Int,
+        @Path("record_id") record_id : Int,
         @Field("speaker_id") speaker_id : Int,
         @Field("speaker_name") speaker_name : String
     ): Call<Result>

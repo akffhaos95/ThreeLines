@@ -51,7 +51,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="8"
-            android:text="Lon. Class eos. Nunc eros libero, interdum blandit dolor dignissim, luctus suscipit magna. Ut magna nulla, posuere sed odio nec, consequat vulputate tortor. Praesent in venenatis arcu. Sed quis mi eget ex ullamcorper venenatis a ac diam. Aenean ultricies ligula nec eleifend ultricies."
+            android:text=" posuere sed odio nec, consequat vulputate tortor. Praesent in venenatis arcu. Sed quis mi eget ex ullamcorper venenatis a ac diam. Aenean ultricies ligula nec eleifend ultricies."
             android:textColor="@color/context_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/time"
