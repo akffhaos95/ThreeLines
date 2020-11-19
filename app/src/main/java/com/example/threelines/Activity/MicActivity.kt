@@ -5,14 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import android.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,8 +18,6 @@ import com.example.threelines.Network.RetrofitClient
 import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
 import com.github.squti.androidwaverecorder.WaveRecorder
-import com.tyorikan.voicerecordingvisualizer.RecordingSampler
-import com.tyorikan.voicerecordingvisualizer.VisualizerView
 import kotlinx.android.synthetic.main.activity_mic.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -102,7 +97,7 @@ class MicActivity : Fragment(R.layout.activity_mic) {
 */
 
         // Dialog builder
-        val builder = AlertDialog.Builder(activity!!.applicationContext)
+        val builder = AlertDialog.Builder(activity!!)
         val dialogView = layoutInflater.inflate(R.layout.dialog_item, null)
 
         val title_edit = dialogView.findViewById<EditText>(R.id.editText_title)
@@ -111,6 +106,7 @@ class MicActivity : Fragment(R.layout.activity_mic) {
 
         // Dialog View
         button_send_audio.setOnClickListener{
+            Log.d(TAG, "Btn Send Audio")
             if (dialogView.parent != null) (dialogView.parent as ViewGroup).removeView(
                 dialogView
             )
