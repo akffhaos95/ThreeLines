@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Saejul"
+            android:text="말하는 대로"
             android:textAlignment="center"
             android:textColor="#FFF"
             android:textSize="40sp" />
