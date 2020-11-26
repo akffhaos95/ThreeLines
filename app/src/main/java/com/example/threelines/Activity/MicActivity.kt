@@ -1,6 +1,7 @@
 package com.example.threelines.Activity
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import android.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,6 +19,8 @@ import com.example.threelines.Network.RetrofitService
 import com.example.threelines.R
 import com.github.squti.androidwaverecorder.WaveRecorder
 import kotlinx.android.synthetic.main.activity_mic.*
+import kotlinx.android.synthetic.main.activity_mic.view.*
+import kotlinx.android.synthetic.main.text_item.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,6 +30,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import java.io.File
 import java.util.*
+import kotlin.concurrent.timer
+
 
 /*
 * MicActivity
@@ -41,6 +45,7 @@ class MicActivity : Fragment(R.layout.activity_mic) {
     private var TAG = "MIC"
     private lateinit var retrofit: Retrofit
     private lateinit var retrofitService: RetrofitService
+    private lateinit var timerTask : Timer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,6 +85,12 @@ class MicActivity : Fragment(R.layout.activity_mic) {
                 Log.d(TAG, "Record Start")
                 Toast.makeText(activity!!.applicationContext, "녹음 시작", Toast.LENGTH_SHORT).show()
                 waveRecorder.startRecording()
+
+                button_start_recording.visibility = View.GONE
+                button_stop_recording.visibility = View.VISIBLE
+                button_send_audio.visibility = View.GONE
+
+                startTimer()
             }
         }
 
@@ -87,6 +98,12 @@ class MicActivity : Fragment(R.layout.activity_mic) {
             Log.d(TAG, "Record End")
             Toast.makeText(activity!!.applicationContext, "녹음 끝", Toast.LENGTH_SHORT).show()
             waveRecorder.stopRecording()
+
+            button_start_recording.visibility = View.VISIBLE
+            button_stop_recording.visibility = View.GONE
+            button_send_audio.visibility = View.VISIBLE
+
+            stopTimer()
         }
 /*
         //Pause
@@ -174,5 +191,44 @@ class MicActivity : Fragment(R.layout.activity_mic) {
             }
         })
         return result
+    }
+
+    private fun startTimer() {
+        var tim = 0
+        var min = 0
+        var sec = 0
+
+        timerTask = timer(period = 1000) {
+            sec++
+            if (sec == 60) {
+                min++
+                sec = 0
+            }
+            if (min == 60) {
+                tim++
+                min = 0
+            }
+            activity!!.runOnUiThread {
+                text_tim.text = "$tim"
+                if(sec == 0){
+                    text_sec.text = "00"
+                } else if(sec < 10) {
+                    text_sec.text = "0$sec"
+                } else {
+                    text_sec.text = "$sec"
+                }
+                if(min == 0){
+                    text_min.text = "00"
+                } else if(min < 10) {
+                    text_min.text = "0$min"
+                } else {
+                    text_min.text = "$min"
+                }
+            }
+        }
+    }
+
+    private fun stopTimer() {
+        timerTask.cancel()
     }
 }
