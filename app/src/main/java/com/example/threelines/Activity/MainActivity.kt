@@ -44,11 +44,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.btn_setting_fragment -> {
-//                val settingActivity = SettingActivity()
-//                supportFragmentManager.beginTransaction().apply {
-//                    replace(R.id.fragment, settingActivity)
-//                    commit()
-//                }
+                val settingActivity = SettingActivity()
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment, settingActivity)
+                    commit()
+                }
             }
         }
         return true

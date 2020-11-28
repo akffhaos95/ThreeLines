@@ -50,7 +50,10 @@ class RecordHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         itemView.title.text = listdata.title
         itemView.people.text = "${listdata.people}인"
         itemView.location.text = listdata.location
-        itemView.uploaded_date.text = listdata.uploaded_date
+        val uploaded_date = listdata.uploaded_date.split(".")[0].split("T")
+        val date = uploaded_date[0]
+        val time = uploaded_date[1]
+        itemView.uploaded_date.text = "$date $time"
 
         val random = Random()
         var color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
